@@ -3,232 +3,307 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cheesecake Bob | Cheese Cake Blessings</title>
-  <meta name="description" content="Handmade cheesecakes with love. Classic, seasonal, and custom flavors by Cheesecake Bob.">
+  <title>Cheesecake Bob | Made with Love</title>
+  <meta name="description" content="Every cheesecake is made with love. The secret ingredient is love. Smooth, creamy, and full of blessings by Cheesecake Bob.">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            cream: '#FFF8F0',
-            caramel: '#D4A574',
-            chocolate: '#3C2F2F',
-            berry: '#C45C7A',
-            softgold: '#E8D5B7'
+            cream: '#FFF9F0',
+            gold: '#F4C430',
+            rastaGreen: '#006B3F',
+            rastaRed: '#C8102E',
+            chocolate: '#2C1810',
+            softGold: '#F5E6C8',
+            island: '#1A5F4A'
           },
           fontFamily: {
             display: ['Playfair Display', 'serif'],
-            body: ['Inter', 'sans-serif']
+            body: ['Poppins', 'sans-serif']
           }
         }
       }
     }
   </script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { font-family: 'Poppins', sans-serif; }
     h1, h2, h3 { font-family: 'Playfair Display', serif; }
-    .hero-gradient {
-      background: linear-gradient(135deg, #FFF8F0 0%, #F5E6D3 40%, #E8D5B7 100%);
+    
+    .hero-bg {
+      background: linear-gradient(160deg, #FFF9F0 0%, #F5E6C8 35%, #E8D5A3 70%, #F4C430 100%);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 140%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,107,63,0.08) 0%, transparent 60%);
+      animation: slowPulse 12s ease-in-out infinite;
+    }
+    
+    @keyframes slowPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+      50% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+    }
+    
     .card-hover {
-      transition: all 0.35s ease;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .card-hover:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(60, 47, 47, 0.12);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(44, 24, 16, 0.15);
+    }
+    
+    .love-glow {
+      animation: loveGlow 3s ease-in-out infinite;
+    }
+    @keyframes loveGlow {
+      0%, 100% { text-shadow: 0 0 10px rgba(244, 196, 48, 0.4); }
+      50% { text-shadow: 0 0 25px rgba(244, 196, 48, 0.8), 0 0 40px rgba(200, 16, 46, 0.3); }
+    }
+    
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body class="bg-cream text-chocolate">
 
   <!-- NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-md border-b border-softgold/60">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-lg border-b border-gold/30">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="#" class="text-2xl font-display font-bold tracking-tight">
-        Cheesecake <span class="text-caramel">Bob</span>
+        Cheesecake <span class="text-rastaGreen">Bob</span>
       </a>
       <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-        <a href="#about" class="hover:text-caramel transition">About</a>
-        <a href="#menu" class="hover:text-caramel transition">Menu</a>
-        <a href="#order" class="hover:text-caramel transition">Order</a>
+        <a href="#story" class="hover:text-rastaGreen transition">Our Story</a>
+        <a href="#menu" class="hover:text-rastaGreen transition">Menu</a>
+        <a href="#order" class="hover:text-rastaGreen transition">Order</a>
       </div>
-      <a href="#order" class="px-5 py-2.5 bg-chocolate text-cream rounded-full text-sm font-medium hover:bg-caramel transition">
-        Order Now
+      <a href="#order" class="px-5 py-2.5 bg-rastaGreen text-cream rounded-full text-sm font-medium hover:bg-island transition shadow-md">
+        Order with Love
       </a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section class="hero-gradient pt-28 pb-20 md:pt-36 md:pb-28">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="text-caramel font-medium tracking-widest uppercase text-sm mb-4">Handmade with Love</p>
-      <h1 class="text-5xl md:text-7xl font-display font-bold leading-tight mb-6">
-        Cheese Cake<br>
-        <span class="text-caramel">Blessings</span>
+  <section class="hero-bg pt-32 pb-24 md:pt-40 md:pb-32 relative">
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+      <p class="text-rastaGreen font-medium tracking-[0.2em] uppercase text-sm mb-5">One Love • One Cheesecake</p>
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] mb-6">
+        Made with<br>
+        <span class="text-rastaRed love-glow">Love</span>
       </h1>
-      <p class="text-lg md:text-xl text-chocolate/80 max-w-2xl mx-auto mb-10 leading-relaxed">
-        Classic New York style, seasonal flavors, and custom creations.  
-        Every cheesecake is baked fresh with real ingredients and a whole lot of heart.
+      <p class="text-xl md:text-2xl text-chocolate/80 max-w-2xl mx-auto mb-4 leading-relaxed font-light">
+        The secret ingredient has always been love.
+      </p>
+      <p class="text-lg text-chocolate/60 max-w-xl mx-auto mb-12">
+        Smooth. Creamy. Blessed. Every bite carries the vibration of care.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#menu" class="px-8 py-4 bg-chocolate text-cream rounded-full font-medium hover:bg-caramel transition">
-          See the Menu
+        <a href="#menu" class="px-9 py-4 bg-rastaGreen text-cream rounded-full font-medium text-lg hover:bg-island transition shadow-lg">
+          Taste the Blessings
         </a>
-        <a href="#order" class="px-8 py-4 border-2 border-chocolate text-chocolate rounded-full font-medium hover:bg-chocolate hover:text-cream transition">
-          Place an Order
+        <a href="#story" class="px-9 py-4 border-2 border-chocolate/30 text-chocolate rounded-full font-medium text-lg hover:border-rastaGreen hover:text-rastaGreen transition">
+          Hear the Story
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="py-20 md:py-28 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Meet Bob</h2>
-          <p class="text-lg text-chocolate/80 leading-relaxed mb-6">
-            What started as a passion for the perfect slice turned into a little bakery known for rich, creamy cheesecakes that feel like a warm hug.
-          </p>
-          <p class="text-lg text-chocolate/80 leading-relaxed mb-6">
-            Every cake is made in small batches using quality cream cheese, real vanilla, and seasonal ingredients. No shortcuts. Just good cheesecake.
-          </p>
-          <p class="text-caramel font-medium italic">
-            “Cheese cake blessings” — that’s the whole philosophy.
-          </p>
-        </div>
-        <div class="bg-softgold/40 rounded-3xl p-10 text-center">
-          <div class="text-6xl mb-4">🍰</div>
-          <p class="text-xl font-display font-semibold mb-2">Small Batch</p>
-          <p class="text-chocolate/70">Baked fresh. Never frozen. Always made with care.</p>
-        </div>
+  <!-- STORY -->
+  <section id="story" class="py-24 md:py-32 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-rastaGreen tracking-widest uppercase text-sm font-medium mb-3">The Heart of It All</p>
+        <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">A Story Baked in Love</h2>
+      </div>
+
+      <div class="space-y-10 text-lg md:text-xl leading-relaxed text-chocolate/80">
+        <p class="fade-up">
+          It started simple. A kitchen, a passion, and a quiet knowing that food made with real care tastes different. Not just better — different. You can feel it.
+        </p>
+        <p class="fade-up">
+          Every morning Bob mixes the cream cheese slow. No rush. The sugar dissolves like soft reggae — steady, smooth, no force. Real vanilla. Fresh eggs. A graham cracker crust pressed by hand. The oven is set with intention. Nothing is hurried.
+        </p>
+        <p class="fade-up">
+          People ask all the time: “What’s the secret?” They expect some fancy technique or rare ingredient. Bob just smiles and says the same thing every time:
+        </p>
+        <blockquote class="border-l-4 border-gold pl-8 py-4 my-12 text-2xl md:text-3xl font-display text-chocolate italic">
+          “The secret ingredient is love. That’s it. Everything else is just the recipe.”
+        </blockquote>
+        <p class="fade-up">
+          And it’s true. You can taste when something is made with love. The texture is softer. The flavor sits deeper. It feels like someone cared about the person who would eventually take the first bite.
+        </p>
+        <p class="fade-up">
+          That’s the whole philosophy. No mass production. No frozen shortcuts. Just small batches, real ingredients, and a whole lot of love poured into every single cheesecake.
+        </p>
+        <p class="text-center text-rastaGreen font-medium text-xl mt-12 fade-up">
+          Cheese cake blessings. One love.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- MENU -->
-  <section id="menu" class="py-20 md:py-28 bg-cream">
+  <section id="menu" class="py-24 md:py-32 bg-softGold/40">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-14">
+      <div class="text-center mb-16">
+        <p class="text-rastaGreen tracking-widest uppercase text-sm font-medium mb-3">From the Heart</p>
         <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Signature Cheesecakes</h2>
-        <p class="text-lg text-chocolate/70 max-w-xl mx-auto">A few favorites. Seasonal specials rotate — just ask what’s fresh this week.</p>
+        <p class="text-lg text-chocolate/70 max-w-xl mx-auto">Each one made fresh, in small batches, with the same secret ingredient.</p>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Classic -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-48 bg-gradient-to-br from-softgold to-caramel/60 flex items-center justify-center text-6xl">
+          <div class="h-52 bg-gradient-to-br from-softGold to-gold/50 flex items-center justify-center text-7xl">
             🧀
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-display font-semibold mb-2">Classic New York</h3>
-            <p class="text-chocolate/70 text-sm mb-4">Dense, creamy, and perfectly tangy with a graham cracker crust.</p>
-            <p class="font-medium text-caramel">Starting at $42</p>
+          <div class="p-7">
+            <h3 class="text-2xl font-display font-semibold mb-2">Classic New York</h3>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Dense, creamy, perfectly tangy. The original blessing with a hand-pressed graham crust.</p>
+            <p class="font-semibold text-rastaGreen">From $42</p>
           </div>
         </div>
 
         <!-- Berry -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-48 bg-gradient-to-br from-berry/20 to-berry/50 flex items-center justify-center text-6xl">
+          <div class="h-52 bg-gradient-to-br from-rastaRed/10 to-rastaRed/30 flex items-center justify-center text-7xl">
             🍓
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-display font-semibold mb-2">Fresh Berry</h3>
-            <p class="text-chocolate/70 text-sm mb-4">Classic base topped with a bright, house-made berry compote.</p>
-            <p class="font-medium text-caramel">Starting at $48</p>
+          <div class="p-7">
+            <h3 class="text-2xl font-display font-semibold mb-2">Fresh Berry</h3>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Classic base crowned with a bright, house-made berry compote that tastes like sunshine.</p>
+            <p class="font-semibold text-rastaGreen">From $48</p>
           </div>
         </div>
 
         <!-- Chocolate -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-48 bg-gradient-to-br from-chocolate/20 to-chocolate/50 flex items-center justify-center text-6xl">
+          <div class="h-52 bg-gradient-to-br from-chocolate/10 to-chocolate/30 flex items-center justify-center text-7xl">
             🍫
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-display font-semibold mb-2">Chocolate Swirl</h3>
-            <p class="text-chocolate/70 text-sm mb-4">Rich chocolate ribbons throughout a creamy vanilla cheesecake.</p>
-            <p class="font-medium text-caramel">Starting at $48</p>
+          <div class="p-7">
+            <h3 class="text-2xl font-display font-semibold mb-2">Chocolate Swirl</h3>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Rich chocolate ribbons dancing through a smooth vanilla cheesecake. Pure harmony.</p>
+            <p class="font-semibold text-rastaGreen">From $48</p>
           </div>
         </div>
 
         <!-- Lemon -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-48 bg-gradient-to-br from-yellow-100 to-yellow-300/70 flex items-center justify-center text-6xl">
+          <div class="h-52 bg-gradient-to-br from-yellow-100 to-gold/40 flex items-center justify-center text-7xl">
             🍋
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-display font-semibold mb-2">Lemon Zest</h3>
-            <p class="text-chocolate/70 text-sm mb-4">Bright and light with real lemon zest and a shortbread crust.</p>
-            <p class="font-medium text-caramel">Starting at $46</p>
+          <div class="p-7">
+            <h3 class="text-2xl font-display font-semibold mb-2">Lemon Zest</h3>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Bright, light, and full of real lemon zest. Shortbread crust that melts like a good song.</p>
+            <p class="font-semibold text-rastaGreen">From $46</p>
           </div>
         </div>
 
         <!-- Seasonal -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-48 bg-gradient-to-br from-orange-100 to-orange-300/60 flex items-center justify-center text-6xl">
-            🍂
+          <div class="h-52 bg-gradient-to-br from-orange-100 to-orange-300/50 flex items-center justify-center text-7xl">
+            🌿
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-display font-semibold mb-2">Seasonal Special</h3>
-            <p class="text-chocolate/70 text-sm mb-4">Rotating flavors — pumpkin, apple, key lime, and more.</p>
-            <p class="font-medium text-caramel">Ask for this week’s</p>
+          <div class="p-7">
+            <h3 class="text-2xl font-display font-semibold mb-2">Seasonal Special</h3>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Whatever the land is giving right now — pumpkin, key lime, apple, or something new.</p>
+            <p class="font-semibold text-rastaGreen">Ask what’s fresh</p>
           </div>
         </div>
 
         <!-- Custom -->
-        <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover border-2 border-dashed border-caramel/50">
-          <div class="h-48 bg-softgold/50 flex items-center justify-center text-6xl">
-            ✨
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover border-2 border-dashed border-gold/60">
+          <div class="h-52 bg-gradient-to-br from-rastaGreen/10 to-gold/30 flex items-center justify-center text-7xl">
+            💛
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-display font-semibold mb-2">Custom Orders</h3>
-            <p class="text-chocolate/70 text-sm mb-4">Weddings, birthdays, or your own flavor idea. Let’s make it happen.</p>
-            <p class="font-medium text-caramel">Message for quote</p>
+          <div class="p-7">
+            <h3 class="text-2xl font-display font-semibold mb-2">Custom Love Cakes</h3>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Weddings, birthdays, or your own flavor dream. We’ll pour love into whatever you need.</p>
+            <p class="font-semibold text-rastaGreen">Message for a quote</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ORDER / CONTACT -->
-  <section id="order" class="py-20 md:py-28 bg-chocolate text-cream">
+  <!-- LOVE BANNER -->
+  <section class="py-16 bg-rastaGreen text-cream text-center">
+    <div class="max-w-3xl mx-auto px-6">
+      <p class="text-2xl md:text-3xl font-display italic leading-relaxed">
+        “Every single one is made with love.<br>That’s the only way I know how.”
+      </p>
+      <p class="mt-4 text-cream/70 tracking-wide">— Bob</p>
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="order" class="py-24 md:py-32 bg-chocolate text-cream">
     <div class="max-w-3xl mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Ready for a slice?</h2>
-      <p class="text-lg text-cream/80 mb-10 leading-relaxed">
-        Orders are taken by message. Tell me the flavor, size, and date you need it —  
-        I’ll get back to you quick with availability and total.
+      <p class="text-gold tracking-widest uppercase text-sm font-medium mb-4">Come Get Yours</p>
+      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Ready for a Blessing?</h2>
+      <p class="text-lg text-cream/80 mb-12 leading-relaxed">
+        Just send a message with the flavor, size, and when you need it.  
+        Bob will get back to you with love and the details.
       </p>
 
-      <div class="bg-white/10 backdrop-blur rounded-3xl p-8 md:p-10 text-left space-y-6">
+      <div class="bg-white/10 backdrop-blur rounded-3xl p-8 md:p-10 text-left space-y-7">
         <div>
-          <p class="text-sm uppercase tracking-wider text-caramel mb-1">Text or Call</p>
+          <p class="text-sm uppercase tracking-wider text-gold mb-1">Text or Call</p>
           <p class="text-2xl font-medium">[Your Phone Number]</p>
         </div>
         <div>
-          <p class="text-sm uppercase tracking-wider text-caramel mb-1">Email</p>
+          <p class="text-sm uppercase tracking-wider text-gold mb-1">Email</p>
           <p class="text-2xl font-medium">[your@email.com]</p>
         </div>
         <div>
-          <p class="text-sm uppercase tracking-wider text-caramel mb-1">Pickup / Local Delivery</p>
-          <p class="text-lg text-cream/80">Available in the local area. Details when you order.</p>
+          <p class="text-sm uppercase tracking-wider text-gold mb-1">Pickup & Local Delivery</p>
+          <p class="text-lg text-cream/80">Available in the area. We’ll work out the details when you order.</p>
         </div>
       </div>
 
-      <p class="mt-10 text-cream/60 text-sm">
-        Please order at least 48 hours ahead for best availability.
+      <p class="mt-10 text-cream/50 text-sm">
+        Please order at least 48 hours ahead so the love has time to settle in properly.
       </p>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-chocolate border-t border-white/10 py-8">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-cream/60 text-sm">
-      <p>© 2026 Cheesecake Bob. All rights reserved.</p>
-      <p class="italic">Cheese cake blessings 🍰</p>
+  <footer class="bg-chocolate border-t border-white/10 py-10">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-cream/50 text-sm">
+      <p>© 2026 Cheesecake Bob. Made with love.</p>
+      <p class="italic text-gold/80">One love. One cheesecake. Blessings. 💛</p>
     </div>
   </footer>
 
+  <script>
+    // Simple fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
