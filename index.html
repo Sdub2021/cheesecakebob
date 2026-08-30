@@ -126,7 +126,7 @@
   <section id="order" class="py-16 sm:py-28 bg-chocolate text-cream px-4" style="padding-bottom:max(4rem, env(safe-area-inset-bottom))">
     <div class="max-w-xl mx-auto">
       <h2 class="text-3xl sm:text-5xl font-display font-bold text-center mb-3">Pay Bob</h2>
-      <p class="text-center text-cream/75 mb-8">One instruction: transfer SOL to the address below. Confirm it in your wallet before you approve.</p>
+      <p class="text-center text-cream/75 mb-8">You pay from your wallet. SOL lands in Bob’s shop address below.</p>
       <div class="bg-white/10 rounded-3xl p-5 sm:p-8 space-y-4">
         <label class="block text-xs uppercase tracking-wider text-gold">Cake</label>
         <select id="cake" class="w-full min-h-12 rounded-xl bg-chocolate border border-white/20 px-4 text-cream">
@@ -143,14 +143,15 @@
         <p id="pay-quote" class="text-gold">Loading quote…</p>
         <p class="text-cream/60 text-sm">Wallet <span id="pay-wallet">not connected</span></p>
         <button id="open-phantom" class="hidden w-full min-h-12 rounded-full bg-violet-600 text-white font-medium">Open in Phantom</button>
+        <button id="pay-any" class="w-full min-h-12 rounded-full border border-cream/40 text-cream">Pay from any Solana wallet</button>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button id="connect-sol" class="min-h-12 rounded-full border border-gold text-gold">Connect wallet</button>
-          <button id="pay-sol" class="min-h-12 rounded-full bg-gold text-chocolate font-semibold">Pay SOL</button>
+          <button id="connect-sol" class="min-h-12 rounded-full border border-gold text-gold">Use my wallet</button>
+          <button id="pay-sol" class="min-h-12 rounded-full bg-gold text-chocolate font-semibold">Send from my wallet</button>
         </div>
         <p id="pay-status" class="text-sm text-cream/70"></p>
-        <p class="text-[11px] text-cream/45 break-all leading-relaxed">Receives only:<br>68wcbLLBULTWKBriRq5BmgYw6fQREV54e59hRqrWWtj8</p>
+        <p class="text-[11px] text-cream/45 break-all leading-relaxed">Bob receives:<br>E2HfyLor6AAsexeTU6pUC9XHmwu616GmYXzrbAiH2csm</p>
       </div>
-      <p class="mt-6 text-xs text-cream/55 leading-relaxed">Use HTTPS. If cheesecakebob.com warns about a certificate, open https://sdub2021.github.io/cheesecakebob/ instead. On iPhone/Android use Phantom’s in-app browser. We never hold keys.</p>
+      <p class="mt-6 text-xs text-cream/55 leading-relaxed">Use HTTPS. If cheesecakebob.com warns about a certificate, open https://sdub2021.github.io/cheesecakebob/ instead. On iPhone/Android use your wallet’s in-app browser.</p>
     </div>
   </section>
 
