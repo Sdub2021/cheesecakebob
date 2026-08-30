@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cheesecake Bob | Pay with Solana</title>
-  <meta name="description" content="Small-batch cheesecakes. Pay in SOL to Bob’s wallet. No seed phrases.">
+  <meta name="description" content="Small-batch cheesecakes. Pay in SOL from your wallet.">
   <meta name="theme-color" content="#2C1810">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.json">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.coingecko.com https://api.mainnet-beta.solana.com; object-src 'none'; base-uri 'self'; form-action 'self';">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -19,144 +21,153 @@
         extend: {
           colors: {
             cream: '#FFF9F0', gold: '#F4C430', rastaGreen: '#006B3F',
-            rastaRed: '#C8102E', chocolate: '#2C1810', softGold: '#F5E6C8', island: '#1A5F4A'
-          },
-          fontFamily: { display: ['Playfair Display', 'serif'], body: ['Poppins', 'sans-serif'] }
+            rastaRed: '#C8102E', chocolate: '#2C1810', softGold: '#F5E6C8'
+          }
         }
       }
     }
   </script>
   <style>
-    html { -webkit-text-size-adjust: 100%; }
-    body { font-family: Poppins, system-ui, sans-serif; }
+    html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+    body { font-family: Poppins, system-ui, sans-serif; overflow-x: hidden; padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+    @media (min-width: 768px) { body { padding-bottom: 0; } }
     h1,h2,h3 { font-family: 'Playfair Display', Georgia, serif; }
     a, button, input, select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-    input, select { font-size: 16px; }
-    .hero-bg { background: linear-gradient(160deg, #FFF9F0 0%, #F5E6C8 40%, #F4C430 100%); }
-    .love-glow { animation: glow 3s ease-in-out infinite; }
-    @keyframes glow {
-      0%,100% { text-shadow: 0 0 10px rgba(244,196,48,.4); }
-      50% { text-shadow: 0 0 24px rgba(244,196,48,.8); }
+    input, select, textarea { font-size: 16px !important; }
+    .hero-bg { background: linear-gradient(160deg, #FFF9F0 0%, #F5E6C8 45%, #F4C430 100%); }
+    #nav-links.mobile-open {
+      display: flex; flex-direction: column; gap: 0;
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: #FFF9F0; border-bottom: 1px solid rgba(244,196,48,.35);
+      padding: .5rem 1rem 1rem;
     }
+    #nav-links.mobile-open a { min-height: 44px; display: flex; align-items: center; }
+    .dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      padding: .65rem 1rem calc(.65rem + env(safe-area-inset-bottom));
+      background: rgba(44,24,16,.96); backdrop-filter: blur(10px);
+    }
+    @media (min-width: 768px) { .dock { display: none; } }
   </style>
 </head>
 <body class="bg-cream text-chocolate">
-  <nav class="fixed top-0 inset-x-0 z-50 bg-cream/95 backdrop-blur border-b border-gold/30" style="padding-top:env(safe-area-inset-top)">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-      <a href="#" class="text-lg sm:text-2xl font-display font-bold">Cheesecake <span class="text-rastaGreen">Bob</span></a>
-      <button id="nav-toggle" class="md:hidden min-h-11 min-w-11 rounded-full border border-chocolate/20" aria-label="Menu">☰</button>
+  <nav class="fixed top-0 inset-x-0 z-50 bg-cream/95 backdrop-blur border-b border-gold/30">
+    <div class="relative max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3" style="padding-top:max(.75rem, env(safe-area-inset-top))">
+      <a href="#" class="text-lg font-bold">Cheesecake <span class="text-rastaGreen">Bob</span></a>
+      <button id="nav-toggle" class="md:hidden h-11 w-11 rounded-full border border-chocolate/20 text-lg" aria-label="Menu">☰</button>
       <div id="nav-links" class="hidden md:flex items-center gap-6 text-sm font-medium">
-        <a href="#story" class="block py-2">Story</a>
-        <a href="#menu" class="block py-2">Menu</a>
-        <a href="#order" class="block py-2">Pay</a>
+        <a href="#story">Story</a>
+        <a href="#menu">Menu</a>
+        <a href="#order">Pay</a>
       </div>
       <a href="#order" class="hidden md:inline-flex px-5 py-2.5 bg-rastaGreen text-cream rounded-full text-sm">Pay with SOL</a>
     </div>
   </nav>
 
-  <section class="hero-bg pt-28 pb-16 sm:pt-40 sm:pb-28 px-4 text-center">
-    <p class="text-rastaGreen tracking-[0.18em] uppercase text-xs mb-4">One love · Solana checkout</p>
-    <h1 class="text-4xl sm:text-7xl font-display font-bold leading-tight mb-4">Made with<br><span class="text-rastaRed love-glow">Love</span></h1>
-    <p class="text-base sm:text-xl text-chocolate/75 max-w-xl mx-auto mb-8">Small batches. On-chain pay. We never ask for a seed phrase.</p>
-    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="#menu" class="min-h-12 px-8 py-3 bg-rastaGreen text-cream rounded-full font-medium">See the cakes</a>
-      <a href="#order" class="min-h-12 px-8 py-3 border-2 border-chocolate/25 rounded-full font-medium">Pay in SOL</a>
+  <section class="hero-bg pt-24 pb-12 sm:pt-40 sm:pb-28 px-4 text-center">
+    <p class="text-rastaGreen tracking-[0.16em] uppercase text-[11px] mb-3">One love · pay from your wallet</p>
+    <h1 class="text-[2.4rem] leading-[1.05] sm:text-7xl font-bold mb-4">Made with<br><span class="text-rastaRed">Love</span></h1>
+    <p class="text-[15px] sm:text-xl text-chocolate/75 max-w-md mx-auto mb-6">Small batches. You send SOL from the wallet you already own.</p>
+    <div class="flex flex-col gap-3 max-w-xs mx-auto sm:max-w-none sm:flex-row sm:justify-center">
+      <a href="#menu" class="h-12 flex items-center justify-center bg-rastaGreen text-cream rounded-full font-medium">See the cakes</a>
+      <a href="#order" class="h-12 flex items-center justify-center border-2 border-chocolate/20 rounded-full font-medium">Pay now</a>
     </div>
   </section>
 
-  <section id="story" class="py-16 sm:py-28 bg-white px-4">
-    <div class="max-w-3xl mx-auto text-lg leading-relaxed text-chocolate/80">
-      <p class="text-rastaGreen tracking-widest uppercase text-xs mb-3">The heart of it</p>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-chocolate mb-8">Baked in love</h2>
-      <p class="mb-6">Every cake is mixed slow. Real vanilla, fresh eggs, crust pressed by hand. The secret ingredient is love — checkout is just SOL to Bob.</p>
-      <blockquote class="border-l-4 border-gold pl-5 py-2 font-display italic text-2xl text-chocolate">“Everything else is just the recipe.”</blockquote>
+  <section id="story" class="py-12 sm:py-28 bg-white px-4">
+    <div class="max-w-3xl mx-auto text-[16px] leading-relaxed text-chocolate/80">
+      <p class="text-rastaGreen tracking-widest uppercase text-[11px] mb-2">The heart of it</p>
+      <h2 class="text-3xl sm:text-5xl font-bold text-chocolate mb-5">Baked in love</h2>
+      <p class="mb-5">Mixed slow. Real vanilla. Crust by hand. Checkout is just SOL from your wallet to Bob.</p>
+      <blockquote class="border-l-4 border-gold pl-4 font-display italic text-xl text-chocolate">“Everything else is just the recipe.”</blockquote>
     </div>
   </section>
 
-  <section id="menu" class="py-16 sm:py-28 bg-softGold/40 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-center mb-10">Signature cakes</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <article class="bg-white rounded-3xl p-6 shadow-sm">
-          <div class="text-6xl text-center mb-4">🧀</div>
-          <h3 class="text-2xl font-display mb-2">Classic New York</h3>
-          <p class="text-sm text-chocolate/70 mb-4">Dense, tangy, graham crust.</p>
-          <p class="font-semibold text-rastaGreen mb-3">$42</p>
-          <button data-cake="classic" class="w-full min-h-12 rounded-full bg-rastaGreen text-cream">Pay with SOL</button>
-        </article>
-        <article class="bg-white rounded-3xl p-6 shadow-sm">
-          <div class="text-6xl text-center mb-4">🍓</div>
-          <h3 class="text-2xl font-display mb-2">Fresh Berry</h3>
-          <p class="text-sm text-chocolate/70 mb-4">House berry compote.</p>
-          <p class="font-semibold text-rastaGreen mb-3">$48</p>
-          <button data-cake="berry" class="w-full min-h-12 rounded-full bg-rastaGreen text-cream">Pay with SOL</button>
-        </article>
-        <article class="bg-white rounded-3xl p-6 shadow-sm">
-          <div class="text-6xl text-center mb-4">🍫</div>
-          <h3 class="text-2xl font-display mb-2">Chocolate Swirl</h3>
-          <p class="text-sm text-chocolate/70 mb-4">Ribboned through vanilla.</p>
-          <p class="font-semibold text-rastaGreen mb-3">$48</p>
-          <button data-cake="chocolate" class="w-full min-h-12 rounded-full bg-rastaGreen text-cream">Pay with SOL</button>
-        </article>
-        <article class="bg-white rounded-3xl p-6 shadow-sm">
-          <div class="text-6xl text-center mb-4">🍋</div>
-          <h3 class="text-2xl font-display mb-2">Lemon Zest</h3>
-          <p class="text-sm text-chocolate/70 mb-4">Real zest, shortbread crust.</p>
-          <p class="font-semibold text-rastaGreen mb-3">$46</p>
-          <button data-cake="lemon" class="w-full min-h-12 rounded-full bg-rastaGreen text-cream">Pay with SOL</button>
-        </article>
-        <article class="bg-white rounded-3xl p-6 shadow-sm">
-          <div class="text-6xl text-center mb-4">🌿</div>
-          <h3 class="text-2xl font-display mb-2">Seasonal</h3>
-          <p class="text-sm text-chocolate/70 mb-4">Whatever the land is giving.</p>
-          <p class="font-semibold text-rastaGreen mb-3">$50</p>
-          <button data-cake="seasonal" class="w-full min-h-12 rounded-full bg-rastaGreen text-cream">Pay with SOL</button>
-        </article>
-        <article class="bg-white rounded-3xl p-6 shadow-sm border-2 border-dashed border-gold/60">
-          <div class="text-6xl text-center mb-4">💛</div>
-          <h3 class="text-2xl font-display mb-2">Custom</h3>
-          <p class="text-sm text-chocolate/70 mb-4">Wedding / flavor dream deposit.</p>
-          <p class="font-semibold text-rastaGreen mb-3">$50 deposit</p>
-          <button data-cake="seasonal" class="w-full min-h-12 rounded-full border border-rastaGreen text-rastaGreen">Pay deposit</button>
-        </article>
-      </div>
+  <section id="menu" class="py-12 sm:py-28 bg-softGold/40 px-4">
+    <h2 class="text-3xl sm:text-5xl font-bold text-center mb-6">Signature cakes</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <article class="bg-white rounded-2xl p-5">
+        <div class="text-5xl text-center mb-3">🧀</div>
+        <h3 class="text-xl font-display mb-1">Classic New York</h3>
+        <p class="text-sm text-chocolate/70 mb-3">Dense, tangy, graham crust.</p>
+        <p class="font-semibold text-rastaGreen mb-3">$42</p>
+        <button data-cake="classic" class="w-full h-12 rounded-full bg-rastaGreen text-cream">Pay with my wallet</button>
+      </article>
+      <article class="bg-white rounded-2xl p-5">
+        <div class="text-5xl text-center mb-3">🍓</div>
+        <h3 class="text-xl font-display mb-1">Fresh Berry</h3>
+        <p class="text-sm text-chocolate/70 mb-3">House berry compote.</p>
+        <p class="font-semibold text-rastaGreen mb-3">$48</p>
+        <button data-cake="berry" class="w-full h-12 rounded-full bg-rastaGreen text-cream">Pay with my wallet</button>
+      </article>
+      <article class="bg-white rounded-2xl p-5">
+        <div class="text-5xl text-center mb-3">🍫</div>
+        <h3 class="text-xl font-display mb-1">Chocolate Swirl</h3>
+        <p class="text-sm text-chocolate/70 mb-3">Ribboned through vanilla.</p>
+        <p class="font-semibold text-rastaGreen mb-3">$48</p>
+        <button data-cake="chocolate" class="w-full h-12 rounded-full bg-rastaGreen text-cream">Pay with my wallet</button>
+      </article>
+      <article class="bg-white rounded-2xl p-5">
+        <div class="text-5xl text-center mb-3">🍋</div>
+        <h3 class="text-xl font-display mb-1">Lemon Zest</h3>
+        <p class="text-sm text-chocolate/70 mb-3">Real zest, shortbread crust.</p>
+        <p class="font-semibold text-rastaGreen mb-3">$46</p>
+        <button data-cake="lemon" class="w-full h-12 rounded-full bg-rastaGreen text-cream">Pay with my wallet</button>
+      </article>
+      <article class="bg-white rounded-2xl p-5">
+        <div class="text-5xl text-center mb-3">🌿</div>
+        <h3 class="text-xl font-display mb-1">Seasonal</h3>
+        <p class="text-sm text-chocolate/70 mb-3">Whatever the land is giving.</p>
+        <p class="font-semibold text-rastaGreen mb-3">$50</p>
+        <button data-cake="seasonal" class="w-full h-12 rounded-full bg-rastaGreen text-cream">Pay with my wallet</button>
+      </article>
+      <article class="bg-white rounded-2xl p-5 border-2 border-dashed border-gold/60">
+        <div class="text-5xl text-center mb-3">💛</div>
+        <h3 class="text-xl font-display mb-1">Custom</h3>
+        <p class="text-sm text-chocolate/70 mb-3">Wedding / flavor dream deposit.</p>
+        <p class="font-semibold text-rastaGreen mb-3">$50 deposit</p>
+        <button data-cake="seasonal" class="w-full h-12 rounded-full border border-rastaGreen text-rastaGreen">Pay deposit</button>
+      </article>
     </div>
   </section>
 
-  <section id="order" class="py-16 sm:py-28 bg-chocolate text-cream px-4" style="padding-bottom:max(4rem, env(safe-area-inset-bottom))">
+  <section id="order" class="py-12 sm:py-28 bg-chocolate text-cream px-4" style="padding-bottom:max(6rem, calc(5rem + env(safe-area-inset-bottom)))">
     <div class="max-w-xl mx-auto">
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-center mb-3">Pay Bob</h2>
-      <p class="text-center text-cream/75 mb-8">You pay from your wallet. SOL lands in Bob’s shop address below.</p>
-      <div class="bg-white/10 rounded-3xl p-5 sm:p-8 space-y-4">
-        <label class="block text-xs uppercase tracking-wider text-gold">Cake</label>
-        <select id="cake" class="w-full min-h-12 rounded-xl bg-chocolate border border-white/20 px-4 text-cream">
+      <h2 class="text-3xl font-bold text-center mb-2">Pay Bob</h2>
+      <p class="text-center text-cream/75 text-[15px] mb-6">Your wallet sends. Bob’s shop wallet receives.</p>
+      <div class="bg-white/10 rounded-2xl p-4 sm:p-8 space-y-3">
+        <label class="block text-[11px] uppercase tracking-wider text-gold">Cake</label>
+        <select id="cake" class="w-full h-12 rounded-xl bg-chocolate border border-white/20 px-3 text-cream">
           <option value="classic">Classic New York — $42</option>
           <option value="berry">Fresh Berry — $48</option>
           <option value="chocolate">Chocolate Swirl — $48</option>
           <option value="lemon">Lemon Zest — $46</option>
           <option value="seasonal">Seasonal / deposit — $50</option>
         </select>
-        <label class="block text-xs uppercase tracking-wider text-gold">Name</label>
-        <input id="buyer" class="w-full min-h-12 rounded-xl bg-chocolate border border-white/20 px-4 text-cream" placeholder="Who the cake is for" autocomplete="name">
-        <label class="block text-xs uppercase tracking-wider text-gold">Pickup note</label>
-        <input id="note" class="w-full min-h-12 rounded-xl bg-chocolate border border-white/20 px-4 text-cream" placeholder="Day, size">
-        <p id="pay-quote" class="text-gold">Loading quote…</p>
+        <label class="block text-[11px] uppercase tracking-wider text-gold">Name</label>
+        <input id="buyer" class="w-full h-12 rounded-xl bg-chocolate border border-white/20 px-3 text-cream" placeholder="Who the cake is for" autocomplete="name" enterkeyhint="next">
+        <label class="block text-[11px] uppercase tracking-wider text-gold">Pickup note</label>
+        <input id="note" class="w-full h-12 rounded-xl bg-chocolate border border-white/20 px-3 text-cream" placeholder="Day, size" enterkeyhint="done">
+        <p id="pay-quote" class="text-gold text-sm">Loading quote…</p>
         <p class="text-cream/60 text-sm">Wallet <span id="pay-wallet">not connected</span></p>
-        <button id="open-phantom" class="hidden w-full min-h-12 rounded-full bg-violet-600 text-white font-medium">Open in Phantom</button>
-        <button id="pay-any" class="w-full min-h-12 rounded-full border border-cream/40 text-cream">Pay from any Solana wallet</button>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button id="connect-sol" class="min-h-12 rounded-full border border-gold text-gold">Use my wallet</button>
-          <button id="pay-sol" class="min-h-12 rounded-full bg-gold text-chocolate font-semibold">Send from my wallet</button>
+        <button id="open-phantom" class="hidden w-full h-12 rounded-full bg-violet-600 text-white font-medium">Open in Phantom</button>
+        <button id="pay-any" class="w-full h-12 rounded-full border border-cream/40 text-cream">Pay from any Solana wallet</button>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <button id="connect-sol" class="h-12 rounded-full border border-gold text-gold">Use my wallet</button>
+          <button id="pay-sol" class="h-12 rounded-full bg-gold text-chocolate font-semibold">Send from my wallet</button>
         </div>
         <p id="pay-status" class="text-sm text-cream/70"></p>
-        <p class="text-[11px] text-cream/45 break-all leading-relaxed">Bob receives:<br>E2HfyLor6AAsexeTU6pUC9XHmwu616GmYXzrbAiH2csm</p>
+        <p class="text-[11px] text-cream/45 break-all">Bob receives:<br>E2HfyLor6AAsexeTU6pUC9XHmwu616GmYXzrbAiH2csm</p>
       </div>
-      <p class="mt-6 text-xs text-cream/55 leading-relaxed">Use HTTPS. If cheesecakebob.com warns about a certificate, open https://sdub2021.github.io/cheesecakebob/ instead. On iPhone/Android use your wallet’s in-app browser.</p>
     </div>
   </section>
 
-  <footer class="bg-chocolate border-t border-white/10 py-8 px-4 text-center text-cream/45 text-sm" style="padding-bottom:max(2rem, env(safe-area-inset-bottom))">
-    © 2026 Cheesecake Bob · paid on Solana · one love
+  <div class="dock">
+    <a href="#order" class="h-12 flex items-center justify-center rounded-full bg-gold text-chocolate font-semibold">Pay from my wallet</a>
+  </div>
+
+  <footer class="hidden md:block bg-chocolate border-t border-white/10 py-8 px-4 text-center text-cream/45 text-sm">
+    © 2026 Cheesecake Bob · paid on Solana
   </footer>
 
   <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
