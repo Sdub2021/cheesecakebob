@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cheesecake Bob | Made with Love</title>
-  <meta name="description" content="Every cheesecake is made with love. The secret ingredient is love. Smooth, creamy, and full of blessings by Cheesecake Bob.">
+  <meta name="description" content="Every cheesecake is made with love. Pay with Solana. Smooth, creamy blessings by Cheesecake Bob.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>
@@ -31,278 +31,191 @@
   <style>
     body { font-family: 'Poppins', sans-serif; }
     h1, h2, h3 { font-family: 'Playfair Display', serif; }
-    
     .hero-bg {
       background: linear-gradient(160deg, #FFF9F0 0%, #F5E6C8 35%, #E8D5A3 70%, #F4C430 100%);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-    
     .hero-bg::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -20%;
-      width: 140%;
-      height: 200%;
+      content: ''; position: absolute; top: -50%; left: -20%; width: 140%; height: 200%;
       background: radial-gradient(circle, rgba(0,107,63,0.08) 0%, transparent 60%);
       animation: slowPulse 12s ease-in-out infinite;
     }
-    
     @keyframes slowPulse {
       0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
       50% { transform: scale(1.1) rotate(3deg); opacity: 1; }
     }
-    
-    .card-hover {
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .card-hover:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 25px 50px rgba(44, 24, 16, 0.15);
-    }
-    
-    .love-glow {
-      animation: loveGlow 3s ease-in-out infinite;
-    }
+    .card-hover { transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .card-hover:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 25px 50px rgba(44, 24, 16, 0.15); }
+    .love-glow { animation: loveGlow 3s ease-in-out infinite; }
     @keyframes loveGlow {
       0%, 100% { text-shadow: 0 0 10px rgba(244, 196, 48, 0.4); }
       50% { text-shadow: 0 0 25px rgba(244, 196, 48, 0.8), 0 0 40px rgba(200, 16, 46, 0.3); }
     }
-    
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body class="bg-cream text-chocolate">
 
-  <!-- NAV -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-lg border-b border-gold/30">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#" class="text-2xl font-display font-bold tracking-tight">
-        Cheesecake <span class="text-rastaGreen">Bob</span>
-      </a>
+      <a href="#" class="text-2xl font-display font-bold tracking-tight">Cheesecake <span class="text-rastaGreen">Bob</span></a>
       <div class="hidden md:flex items-center gap-8 text-sm font-medium">
         <a href="#story" class="hover:text-rastaGreen transition">Our Story</a>
         <a href="#menu" class="hover:text-rastaGreen transition">Menu</a>
-        <a href="#order" class="hover:text-rastaGreen transition">Order</a>
+        <a href="#order" class="hover:text-rastaGreen transition">Pay in SOL</a>
       </div>
-      <a href="#order" class="px-5 py-2.5 bg-rastaGreen text-cream rounded-full text-sm font-medium hover:bg-island transition shadow-md">
-        Order with Love
-      </a>
+      <a href="#order" class="px-5 py-2.5 bg-rastaGreen text-cream rounded-full text-sm font-medium hover:bg-island transition shadow-md">Pay with Solana</a>
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero-bg pt-32 pb-24 md:pt-40 md:pb-32 relative">
     <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-      <p class="text-rastaGreen font-medium tracking-[0.2em] uppercase text-sm mb-5">One Love • One Cheesecake</p>
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] mb-6">
-        Made with<br>
-        <span class="text-rastaRed love-glow">Love</span>
-      </h1>
-      <p class="text-xl md:text-2xl text-chocolate/80 max-w-2xl mx-auto mb-4 leading-relaxed font-light">
-        The secret ingredient has always been love.
-      </p>
-      <p class="text-lg text-chocolate/60 max-w-xl mx-auto mb-12">
-        Smooth. Creamy. Blessed. Every bite carries the vibration of care.
-      </p>
+      <p class="text-rastaGreen font-medium tracking-[0.2em] uppercase text-sm mb-5">One Love • One Cheesecake • Solana</p>
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] mb-6">Made with<br><span class="text-rastaRed love-glow">Love</span></h1>
+      <p class="text-xl md:text-2xl text-chocolate/80 max-w-2xl mx-auto mb-4 leading-relaxed font-light">The secret ingredient has always been love. Checkout is on-chain.</p>
+      <p class="text-lg text-chocolate/60 max-w-xl mx-auto mb-12">Smooth. Creamy. Blessed. Pay in SOL from Phantom or Solflare.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#menu" class="px-9 py-4 bg-rastaGreen text-cream rounded-full font-medium text-lg hover:bg-island transition shadow-lg">
-          Taste the Blessings
-        </a>
-        <a href="#story" class="px-9 py-4 border-2 border-chocolate/30 text-chocolate rounded-full font-medium text-lg hover:border-rastaGreen hover:text-rastaGreen transition">
-          Hear the Story
-        </a>
+        <a href="#menu" class="px-9 py-4 bg-rastaGreen text-cream rounded-full font-medium text-lg hover:bg-island transition shadow-lg">Taste the Blessings</a>
+        <a href="#order" class="px-9 py-4 border-2 border-chocolate/30 text-chocolate rounded-full font-medium text-lg hover:border-rastaGreen hover:text-rastaGreen transition">Pay with SOL</a>
       </div>
     </div>
   </section>
 
-  <!-- STORY -->
   <section id="story" class="py-24 md:py-32 bg-white">
     <div class="max-w-4xl mx-auto px-6">
       <div class="text-center mb-16">
         <p class="text-rastaGreen tracking-widest uppercase text-sm font-medium mb-3">The Heart of It All</p>
         <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">A Story Baked in Love</h2>
       </div>
-
       <div class="space-y-10 text-lg md:text-xl leading-relaxed text-chocolate/80">
-        <p class="fade-up">
-          It started simple. A kitchen, a passion, and a quiet knowing that food made with real care tastes different. Not just better — different. You can feel it.
-        </p>
-        <p class="fade-up">
-          Every morning Bob mixes the cream cheese slow. No rush. The sugar dissolves like soft reggae — steady, smooth, no force. Real vanilla. Fresh eggs. A graham cracker crust pressed by hand. The oven is set with intention. Nothing is hurried.
-        </p>
-        <p class="fade-up">
-          People ask all the time: “What’s the secret?” They expect some fancy technique or rare ingredient. Bob just smiles and says the same thing every time:
-        </p>
-        <blockquote class="border-l-4 border-gold pl-8 py-4 my-12 text-2xl md:text-3xl font-display text-chocolate italic">
-          “The secret ingredient is love. That’s it. Everything else is just the recipe.”
-        </blockquote>
-        <p class="fade-up">
-          And it’s true. You can taste when something is made with love. The texture is softer. The flavor sits deeper. It feels like someone cared about the person who would eventually take the first bite.
-        </p>
-        <p class="fade-up">
-          That’s the whole philosophy. No mass production. No frozen shortcuts. Just small batches, real ingredients, and a whole lot of love poured into every single cheesecake.
-        </p>
-        <p class="text-center text-rastaGreen font-medium text-xl mt-12 fade-up">
-          Cheese cake blessings. One love.
-        </p>
+        <p class="fade-up">It started simple. A kitchen, a passion, and a quiet knowing that food made with real care tastes different. Not just better — different. You can feel it.</p>
+        <p class="fade-up">Every morning Bob mixes the cream cheese slow. No rush. The sugar dissolves like soft reggae — steady, smooth, no force. Real vanilla. Fresh eggs. A graham cracker crust pressed by hand.</p>
+        <blockquote class="border-l-4 border-gold pl-8 py-4 my-12 text-2xl md:text-3xl font-display text-chocolate italic">“The secret ingredient is love. That’s it. Everything else is just the recipe.”</blockquote>
+        <p class="fade-up">Now you can send the blessing on Solana. Same cakes. Same love. Wallet to kitchen.</p>
+        <p class="text-center text-rastaGreen font-medium text-xl mt-12 fade-up">Cheese cake blessings. One love.</p>
       </div>
     </div>
   </section>
 
-  <!-- MENU -->
   <section id="menu" class="py-24 md:py-32 bg-softGold/40">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
         <p class="text-rastaGreen tracking-widest uppercase text-sm font-medium mb-3">From the Heart</p>
         <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Signature Cheesecakes</h2>
-        <p class="text-lg text-chocolate/70 max-w-xl mx-auto">Each one made fresh, in small batches, with the same secret ingredient.</p>
+        <p class="text-lg text-chocolate/70 max-w-xl mx-auto">USD price locks. You pay the live SOL equivalent on mainnet.</p>
       </div>
-
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Classic -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-52 bg-gradient-to-br from-softGold to-gold/50 flex items-center justify-center text-7xl">
-            🧀
-          </div>
+          <div class="h-52 bg-gradient-to-br from-softGold to-gold/50 flex items-center justify-center text-7xl">🧀</div>
           <div class="p-7">
             <h3 class="text-2xl font-display font-semibold mb-2">Classic New York</h3>
-            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Dense, creamy, perfectly tangy. The original blessing with a hand-pressed graham crust.</p>
-            <p class="font-semibold text-rastaGreen">From $42</p>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Dense, creamy, perfectly tangy. Hand-pressed graham crust.</p>
+            <p class="font-semibold text-rastaGreen mb-4">$42</p>
+            <button data-cake="classic" class="w-full py-2.5 rounded-full bg-rastaGreen text-cream text-sm">Pay with SOL</button>
           </div>
         </div>
-
-        <!-- Berry -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-52 bg-gradient-to-br from-rastaRed/10 to-rastaRed/30 flex items-center justify-center text-7xl">
-            🍓
-          </div>
+          <div class="h-52 bg-gradient-to-br from-rastaRed/10 to-rastaRed/30 flex items-center justify-center text-7xl">🍓</div>
           <div class="p-7">
             <h3 class="text-2xl font-display font-semibold mb-2">Fresh Berry</h3>
-            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Classic base crowned with a bright, house-made berry compote that tastes like sunshine.</p>
-            <p class="font-semibold text-rastaGreen">From $48</p>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Classic base with house-made berry compote.</p>
+            <p class="font-semibold text-rastaGreen mb-4">$48</p>
+            <button data-cake="berry" class="w-full py-2.5 rounded-full bg-rastaGreen text-cream text-sm">Pay with SOL</button>
           </div>
         </div>
-
-        <!-- Chocolate -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-52 bg-gradient-to-br from-chocolate/10 to-chocolate/30 flex items-center justify-center text-7xl">
-            🍫
-          </div>
+          <div class="h-52 bg-gradient-to-br from-chocolate/10 to-chocolate/30 flex items-center justify-center text-7xl">🍫</div>
           <div class="p-7">
             <h3 class="text-2xl font-display font-semibold mb-2">Chocolate Swirl</h3>
-            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Rich chocolate ribbons dancing through a smooth vanilla cheesecake. Pure harmony.</p>
-            <p class="font-semibold text-rastaGreen">From $48</p>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Chocolate ribbons through vanilla. Pure harmony.</p>
+            <p class="font-semibold text-rastaGreen mb-4">$48</p>
+            <button data-cake="chocolate" class="w-full py-2.5 rounded-full bg-rastaGreen text-cream text-sm">Pay with SOL</button>
           </div>
         </div>
-
-        <!-- Lemon -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-52 bg-gradient-to-br from-yellow-100 to-gold/40 flex items-center justify-center text-7xl">
-            🍋
-          </div>
+          <div class="h-52 bg-gradient-to-br from-yellow-100 to-gold/40 flex items-center justify-center text-7xl">🍋</div>
           <div class="p-7">
             <h3 class="text-2xl font-display font-semibold mb-2">Lemon Zest</h3>
-            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Bright, light, and full of real lemon zest. Shortbread crust that melts like a good song.</p>
-            <p class="font-semibold text-rastaGreen">From $46</p>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Real lemon zest. Shortbread crust that melts.</p>
+            <p class="font-semibold text-rastaGreen mb-4">$46</p>
+            <button data-cake="lemon" class="w-full py-2.5 rounded-full bg-rastaGreen text-cream text-sm">Pay with SOL</button>
           </div>
         </div>
-
-        <!-- Seasonal -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover">
-          <div class="h-52 bg-gradient-to-br from-orange-100 to-orange-300/50 flex items-center justify-center text-7xl">
-            🌿
-          </div>
+          <div class="h-52 bg-gradient-to-br from-orange-100 to-orange-300/50 flex items-center justify-center text-7xl">🌿</div>
           <div class="p-7">
             <h3 class="text-2xl font-display font-semibold mb-2">Seasonal Special</h3>
-            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Whatever the land is giving right now — pumpkin, key lime, apple, or something new.</p>
-            <p class="font-semibold text-rastaGreen">Ask what’s fresh</p>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Pumpkin, key lime, apple — whatever the land is giving.</p>
+            <p class="font-semibold text-rastaGreen mb-4">$50</p>
+            <button data-cake="seasonal" class="w-full py-2.5 rounded-full bg-rastaGreen text-cream text-sm">Pay with SOL</button>
           </div>
         </div>
-
-        <!-- Custom -->
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm card-hover border-2 border-dashed border-gold/60">
-          <div class="h-52 bg-gradient-to-br from-rastaGreen/10 to-gold/30 flex items-center justify-center text-7xl">
-            💛
-          </div>
+          <div class="h-52 bg-gradient-to-br from-rastaGreen/10 to-gold/30 flex items-center justify-center text-7xl">💛</div>
           <div class="p-7">
             <h3 class="text-2xl font-display font-semibold mb-2">Custom Love Cakes</h3>
-            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Weddings, birthdays, or your own flavor dream. We’ll pour love into whatever you need.</p>
-            <p class="font-semibold text-rastaGreen">Message for a quote</p>
+            <p class="text-chocolate/70 text-sm mb-5 leading-relaxed">Weddings and flavor dreams. Pay a deposit as Seasonal, then message Bob.</p>
+            <p class="font-semibold text-rastaGreen mb-4">Deposit $50</p>
+            <button data-cake="seasonal" class="w-full py-2.5 rounded-full border border-rastaGreen text-rastaGreen text-sm">Pay deposit in SOL</button>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- LOVE BANNER -->
   <section class="py-16 bg-rastaGreen text-cream text-center">
     <div class="max-w-3xl mx-auto px-6">
-      <p class="text-2xl md:text-3xl font-display italic leading-relaxed">
-        “Every single one is made with love.<br>That’s the only way I know how.”
-      </p>
+      <p class="text-2xl md:text-3xl font-display italic leading-relaxed">“Every single one is made with love.<br>That’s the only way I know how.”</p>
       <p class="mt-4 text-cream/70 tracking-wide">— Bob</p>
     </div>
   </section>
 
-  <!-- ORDER -->
   <section id="order" class="py-24 md:py-32 bg-chocolate text-cream">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <p class="text-gold tracking-widest uppercase text-sm font-medium mb-4">Come Get Yours</p>
-      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Ready for a Blessing?</h2>
-      <p class="text-lg text-cream/80 mb-12 leading-relaxed">
-        Just send a message with the flavor, size, and when you need it.  
-        Bob will get back to you with love and the details.
-      </p>
+    <div class="max-w-3xl mx-auto px-6">
+      <p class="text-gold tracking-widest uppercase text-sm font-medium mb-4 text-center">Solana checkout</p>
+      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 text-center">Pay for a blessing</h2>
+      <p class="text-lg text-cream/80 mb-10 leading-relaxed text-center">Connect Phantom or Solflare. Amount is the live SOL equivalent of the USD menu price. Settles to Bob’s wallet on mainnet.</p>
 
-      <div class="bg-white/10 backdrop-blur rounded-3xl p-8 md:p-10 text-left space-y-7">
-        <div>
-          <p class="text-sm uppercase tracking-wider text-gold mb-1">Text or Call</p>
-          <p class="text-2xl font-medium">[Your Phone Number]</p>
+      <div class="bg-white/10 backdrop-blur rounded-3xl p-8 md:p-10 space-y-5">
+        <label class="block text-sm uppercase tracking-wider text-gold">Cake</label>
+        <select id="cake" class="w-full rounded-xl bg-chocolate border border-white/20 px-4 py-3 text-cream">
+          <option value="classic">Classic New York — $42</option>
+          <option value="berry">Fresh Berry — $48</option>
+          <option value="chocolate">Chocolate Swirl — $48</option>
+          <option value="lemon">Lemon Zest — $46</option>
+          <option value="seasonal">Seasonal / custom deposit — $50</option>
+        </select>
+        <label class="block text-sm uppercase tracking-wider text-gold">Your name</label>
+        <input id="buyer" class="w-full rounded-xl bg-chocolate border border-white/20 px-4 py-3 text-cream" placeholder="Who the cake is for">
+        <label class="block text-sm uppercase tracking-wider text-gold">Pickup note</label>
+        <input id="note" class="w-full rounded-xl bg-chocolate border border-white/20 px-4 py-3 text-cream" placeholder="Day, size, extra love">
+        <p id="pay-quote" class="text-gold">Loading quote…</p>
+        <p class="text-cream/60 text-sm">Wallet <span id="pay-wallet">not connected</span></p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button id="connect-sol" class="flex-1 py-3 rounded-full border border-gold text-gold">Connect wallet</button>
+          <button id="pay-sol" class="flex-1 py-3 rounded-full bg-gold text-chocolate font-semibold">Pay SOL</button>
         </div>
-        <div>
-          <p class="text-sm uppercase tracking-wider text-gold mb-1">Email</p>
-          <p class="text-2xl font-medium">[your@email.com]</p>
-        </div>
-        <div>
-          <p class="text-sm uppercase tracking-wider text-gold mb-1">Pickup & Local Delivery</p>
-          <p class="text-lg text-cream/80">Available in the area. We’ll work out the details when you order.</p>
-        </div>
+        <p id="pay-status" class="mt-2 text-sm text-cream/70"></p>
+        <p class="text-cream/40 text-xs break-all">Receives: 68wcbLLBULTWKBriRq5BmgYw6fQREV54e59hRqrWWtj8</p>
       </div>
-
-      <p class="mt-10 text-cream/50 text-sm">
-        Please order at least 48 hours ahead so the love has time to settle in properly.
-      </p>
+      <p class="mt-10 text-cream/50 text-sm text-center">Order 48 hours ahead so the love can set. After payment, screenshot the signature and text Bob if you already have his number.</p>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="bg-chocolate border-t border-white/10 py-10">
     <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-cream/50 text-sm">
-      <p>© 2026 Cheesecake Bob. Made with love.</p>
+      <p>© 2026 Cheesecake Bob. Made with love. Paid on Solana.</p>
       <p class="italic text-gold/80">One love. One cheesecake. Blessings. 💛</p>
     </div>
   </footer>
 
+  <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+  <script src="/pay.js"></script>
   <script>
-    // Simple fade-up on scroll
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, { threshold: 0.15 });
-
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>
