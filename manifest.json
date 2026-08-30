@@ -1,0 +1,9 @@
+{
+  "name": "Cheesecake Bob",
+  "short_name": "Bob",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFF9F0",
+  "theme_color": "#2C1810",
+  "description": "Pay for cheesecake from your own Solana wallet."
+}
