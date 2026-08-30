@@ -227,7 +227,19 @@
     });
     const tog = $("nav-toggle");
     const menu = $("nav-links");
-    if (tog && menu) tog.addEventListener("click", function () { menu.classList.toggle("hidden"); });
+    if (tog && menu) {
+      tog.addEventListener("click", function () {
+        const open = menu.classList.contains("mobile-open");
+        menu.classList.toggle("hidden", open);
+        menu.classList.toggle("mobile-open", !open);
+      });
+      menu.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", function () {
+          menu.classList.add("hidden");
+          menu.classList.remove("mobile-open");
+        });
+      });
+    }
     paintQuote();
     paintWallet();
     solUsd();
