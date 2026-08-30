@@ -1,8 +1,9 @@
-/* Cheesecake Bob — non-custodial Solana checkout. Never asks for a seed. */
+/* Cheesecake Bob — non-custodial SOL checkout. No seeds. One transfer. */
 (function () {
   const MERCHANT = "68wcbLLBULTWKBriRq5BmgYw6fQREV54e59hRqrWWtj8";
   const RPC = "https://api.mainnet-beta.solana.com";
   const QUOTE_MS = 90000;
+  const SITE = (location.origin + location.pathname).replace(/index\.html$/, "");
   const CAKES = {
     classic: { name: "Classic New York", usd: 42 },
     berry: { name: "Fresh Berry", usd: 48 },
@@ -12,41 +13,40 @@
   };
 
   const $ = function (id) { return document.getElementById(id); };
-  let priceUsd = null;
-  let quoteAt = 0;
-  let provider = null;
-  let connectedPk = null;
+  let priceUsd = null, quoteAt = 0, provider = null, connectedPk = null;
+
+  function isMobile() { return /iPhone|iPad|Android/i.test(navigator.userAgent || ""); }
+  function insecure() { return location.protocol !== "https:" && location.hostname !== "localhost"; }
 
   function setStatus(msg, ok) {
     const el = $("pay-status");
     if (!el) return;
     el.textContent = msg || "";
-    el.className = "mt-4 text-sm " + (ok === true ? "text-gold" : ok === false ? "text-red-300" : "text-cream/70");
+    el.className = "mt-3 text-sm leading-relaxed " + (ok === true ? "text-gold" : ok === false ? "text-red-300" : "text-cream/70");
   }
 
   function getProvider() {
-    const phantom = (window.phantom && window.phantom.solana) || null;
-    if (phantom && phantom.isPhantom) return phantom;
+    const ph = window.phantom && window.phantom.solana;
+    if (ph && ph.isPhantom) return ph;
     if (window.solana && window.solana.isPhantom) return window.solana;
-    if (window.solflare && (window.solflare.isSolflare || window.solflare.isConnected || window.solflare.connect)) return window.solflare;
+    if (window.solflare && window.solflare.connect) return window.solflare;
     if (window.solana && window.solana.connect) return window.solana;
     return null;
   }
 
   function waitProvider(ms) {
     return new Promise(function (resolve) {
-      const found = getProvider();
-      if (found) { resolve(found); return; }
+      const now = getProvider();
+      if (now) { resolve(now); return; }
       let done = false;
-      const finish = function (p) {
+      function finish() {
         if (done) return;
         done = true;
-        window.removeEventListener("solana#initialized", onInit);
-        resolve(p || getProvider());
-      };
-      function onInit() { finish(getProvider()); }
-      window.addEventListener("solana#initialized", onInit);
-      setTimeout(function () { finish(getProvider()); }, ms || 2500);
+        window.removeEventListener("solana#initialized", finish);
+        resolve(getProvider());
+      }
+      window.addEventListener("solana#initialized", finish);
+      setTimeout(finish, ms || 2200);
     });
   }
 
@@ -61,129 +61,134 @@
   }
 
   function selected() {
-    const key = ($("cake") || {}).value || "classic";
-    return CAKES[key] || CAKES.classic;
+    return CAKES[($("cake") || {}).value] || CAKES.classic;
   }
 
   function solAmount() {
-    const cake = selected();
     if (!priceUsd || priceUsd <= 0) return null;
-    return cake.usd / priceUsd;
+    return selected().usd / priceUsd;
   }
 
   function paintQuote() {
-    const cake = selected();
-    const sol = solAmount();
     const q = $("pay-quote");
     if (!q) return;
-    if (!sol) {
-      q.textContent = cake.name + " · $" + cake.usd + " USD · SOL rate loading…";
-      return;
-    }
-    q.textContent = cake.name + " · $" + cake.usd + " ≈ " + sol.toFixed(4) + " SOL @ $" + priceUsd.toFixed(2);
+    const cake = selected();
+    const sol = solAmount();
+    q.textContent = sol
+      ? cake.name + " · $" + cake.usd + " ≈ " + sol.toFixed(4) + " SOL"
+      : cake.name + " · $" + cake.usd + " · fetching SOL price…";
   }
 
   function paintWallet() {
     const el = $("pay-wallet");
-    if (!el) return;
-    el.textContent = connectedPk ? (connectedPk.slice(0, 4) + "…" + connectedPk.slice(-4)) : "not connected";
+    if (el) el.textContent = connectedPk ? (connectedPk.slice(0, 4) + "…" + connectedPk.slice(-4)) : "not connected";
   }
 
-  function insecureOrigin() {
-    return location.protocol !== "https:" && location.hostname !== "localhost";
+  function solanaPayUri() {
+    const sol = solAmount();
+    if (!sol) return "";
+    const cake = selected();
+    const note = (($("note") || {}).value || cake.name).slice(0, 80);
+    return "solana:" + MERCHANT +
+      "?amount=" + sol.toFixed(6) +
+      "&label=" + encodeURIComponent("Cheesecake Bob") +
+      "&message=" + encodeURIComponent(note) +
+      "&memo=" + encodeURIComponent(cake.name);
+  }
+
+  function openInPhantom() {
+    const browse = "https://phantom.app/ul/browse/" + encodeURIComponent(SITE + "#order");
+    location.href = browse;
   }
 
   async function connect(opts) {
-    if (insecureOrigin()) {
-      setStatus("Open this page over HTTPS. Wallets refuse insecure origins.", false);
+    if (insecure()) {
+      setStatus("Wallets block this origin. Use HTTPS.", false);
       return null;
     }
-    provider = await waitProvider(2800);
+    provider = await waitProvider(isMobile() ? 1200 : 2500);
     if (!provider) {
-      setStatus("No wallet found. Use Phantom or Solflare in this browser (on phone: open the site inside the Phantom app browser).", false);
+      if (isMobile()) {
+        setStatus("No wallet in this browser. Tap Open in Phantom, or paste this site into Phantom → Explore.", false);
+      } else {
+        setStatus("Install the Phantom or Solflare extension, then refresh.", false);
+      }
       return null;
     }
     try {
-      if (provider.isConnected && provider.publicKey && opts && opts.onlyIfTrusted) {
-        connectedPk = provider.publicKey.toString();
-        paintWallet();
-        return connectedPk;
-      }
       const res = await provider.connect(opts && opts.onlyIfTrusted ? { onlyIfTrusted: true } : undefined);
       const pk = (res && res.publicKey && res.publicKey.toString()) || (provider.publicKey && provider.publicKey.toString());
-      if (!pk) throw new Error("Wallet did not return an address.");
+      if (!pk) throw new Error("Wallet returned no address.");
       connectedPk = pk;
       paintWallet();
-      if (!(opts && opts.onlyIfTrusted)) setStatus("Connected. Approve only a SOL transfer to Bob’s address below.", true);
+      if (!(opts && opts.onlyIfTrusted)) setStatus("Connected. Pay only sends SOL to the address on this page.", true);
       return pk;
     } catch (e) {
       if (opts && opts.onlyIfTrusted) return null;
-      const msg = (e && e.message) ? e.message : "Connection rejected.";
-      setStatus(msg, false);
+      setStatus((e && e.message) || "Connection rejected.", false);
       return null;
     }
   }
 
-  function assertTransfer(tx, from, lamports) {
-    const { SystemProgram, PublicKey } = window.solanaWeb3;
-    if (!tx.instructions || tx.instructions.length !== 1) throw new Error("Refusing to sign: unexpected instruction count.");
+  function assertTransfer(tx, from) {
+    const { SystemProgram } = window.solanaWeb3;
+    if (!tx.instructions || tx.instructions.length !== 1) throw new Error("Blocked: extra instructions.");
     const ix = tx.instructions[0];
-    if (ix.programId.toBase58() !== SystemProgram.programId.toBase58()) throw new Error("Refusing to sign: not a system transfer.");
+    if (ix.programId.toBase58() !== SystemProgram.programId.toBase58()) throw new Error("Blocked: not a SOL transfer.");
     const dest = ix.keys && ix.keys[1] && ix.keys[1].pubkey && ix.keys[1].pubkey.toBase58();
-    if (dest !== MERCHANT) throw new Error("Refusing to sign: destination is not Bob’s wallet.");
-    if (tx.feePayer.toBase58() !== from.toBase58()) throw new Error("Refusing to sign: unexpected fee payer.");
-    return true;
+    if (dest !== MERCHANT) throw new Error("Blocked: destination mismatch.");
+    if (tx.feePayer.toBase58() !== from.toBase58()) throw new Error("Blocked: fee payer mismatch.");
+  }
+
+  async function payInjected() {
+    if (!window.solanaWeb3) throw new Error("Solana library missing. Hard-refresh.");
+    if (Date.now() - quoteAt > QUOTE_MS) await solUsd();
+    const sol = solAmount();
+    if (!sol) throw new Error("Could not lock a SOL price.");
+    const pk = connectedPk || await connect();
+    if (!pk) return;
+    const { Connection, PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL } = window.solanaWeb3;
+    const from = new PublicKey(pk);
+    const to = new PublicKey(MERCHANT);
+    const lamports = Math.round(sol * LAMPORTS_PER_SOL);
+    if (lamports < 1000) throw new Error("Amount too small.");
+    const conn = new Connection(RPC, "confirmed");
+    const tx = new Transaction().add(SystemProgram.transfer({ fromPubkey: from, toPubkey: to, lamports: lamports }));
+    tx.feePayer = from;
+    const latest = await conn.getLatestBlockhash("finalized");
+    tx.recentBlockhash = latest.blockhash;
+    assertTransfer(tx, from);
+    provider = provider || getProvider();
+    if (!provider || !provider.signAndSendTransaction) throw new Error("This wallet cannot send from this browser.");
+    setStatus("Approve " + sol.toFixed(4) + " SOL to Bob. Read the address in Phantom first.");
+    const signed = await provider.signAndSendTransaction(tx);
+    const sig = typeof signed === "string" ? signed : signed.signature;
+    setStatus("Broadcast. Confirming…");
+    await conn.confirmTransaction({ signature: sig, blockhash: latest.blockhash, lastValidBlockHeight: latest.lastValidBlockHeight }, "confirmed");
+    setStatus("Paid " + selected().name + ". Sig " + String(sig).slice(0, 8) + "… Save that for pickup.", true);
+    try { localStorage.setItem("cb_last_pay", JSON.stringify({ sig: sig, cake: selected().name, usd: selected().usd, sol: sol, at: Date.now() })); } catch (e) {}
   }
 
   async function pay() {
     try {
-      if (!window.solanaWeb3) {
-        setStatus("Solana library did not load. Hard-refresh and try again.", false);
+      if (getProvider()) {
+        await payInjected();
         return;
       }
-      if (Date.now() - quoteAt > QUOTE_MS) await solUsd();
-      const sol = solAmount();
-      if (!sol) {
-        setStatus("Could not lock a SOL price. Try again.", false);
+      if (isMobile()) {
+        const uri = solanaPayUri();
+        if (!uri) {
+          setStatus("Wait for the SOL quote, then tap Pay again.", false);
+          await solUsd();
+          return;
+        }
+        setStatus("Opening wallet with a Solana Pay request. Confirm destination is Bob.");
+        location.href = uri;
         return;
       }
-      const pk = connectedPk || await connect();
-      if (!pk) return;
-      const cake = selected();
-      const { Connection, PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL } = window.solanaWeb3;
-      const from = new PublicKey(pk);
-      const to = new PublicKey(MERCHANT);
-      const lamports = Math.round(sol * LAMPORTS_PER_SOL);
-      if (lamports < 1000) throw new Error("Amount too small.");
-      setStatus("Wallet will ask you to send " + sol.toFixed(4) + " SOL to Bob. Check the address before you approve.");
-
-      const conn = new Connection(RPC, "confirmed");
-      const tx = new Transaction().add(SystemProgram.transfer({ fromPubkey: from, toPubkey: to, lamports: lamports }));
-      tx.feePayer = from;
-      const latest = await conn.getLatestBlockhash("finalized");
-      tx.recentBlockhash = latest.blockhash;
-      assertTransfer(tx, from, lamports);
-
-      if (!provider) provider = getProvider();
-      if (!provider || !provider.signAndSendTransaction) throw new Error("Wallet cannot send transactions in this browser.");
-      const signed = await provider.signAndSendTransaction(tx);
-      const sig = typeof signed === "string" ? signed : (signed.signature || signed);
-      setStatus("Broadcast. Waiting for confirmation…");
-      await conn.confirmTransaction({ signature: sig, blockhash: latest.blockhash, lastValidBlockHeight: latest.lastValidBlockHeight }, "confirmed");
-      const recap = cake.name + " · $" + cake.usd;
-      setStatus("Paid. " + recap + ". Signature " + String(sig).slice(0, 8) + "… Keep that for pickup.", true);
-      try { localStorage.setItem("cb_last_pay", JSON.stringify({ sig: sig, cake: cake.name, usd: cake.usd, sol: sol, at: Date.now() })); } catch (e) {}
+      setStatus("No wallet detected. Install Phantom, then refresh.", false);
     } catch (e) {
-      setStatus((e && e.message) ? e.message : "Payment cancelled.", false);
-    }
-  }
-
-  function mobileHint() {
-    const ua = navigator.userAgent || "";
-    const mobile = /iPhone|iPad|Android/i.test(ua);
-    const injected = !!(window.phantom || window.solana || window.solflare);
-    if (mobile && !injected) {
-      setStatus("On phone, open this URL inside the Phantom app browser (Explore → paste the site). Safari/Chrome cannot see the wallet.", false);
+      setStatus((e && e.message) || "Payment cancelled.", false);
     }
   }
 
@@ -191,9 +196,14 @@
     const cake = $("cake");
     if (cake) cake.addEventListener("change", paintQuote);
     const cbtn = $("connect-sol");
-    if (cbtn) cbtn.addEventListener("click", function () { connect().catch(function (e) { setStatus(e.message, false); }); });
+    if (cbtn) cbtn.addEventListener("click", function () { connect(); });
     const pbtn = $("pay-sol");
     if (pbtn) pbtn.addEventListener("click", pay);
+    const ph = $("open-phantom");
+    if (ph) {
+      ph.classList.toggle("hidden", !isMobile() || !!getProvider());
+      ph.addEventListener("click", openInPhantom);
+    }
     document.querySelectorAll("[data-cake]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         if (cake) cake.value = btn.getAttribute("data-cake");
@@ -202,10 +212,15 @@
         if (ord) ord.scrollIntoView({ behavior: "smooth" });
       });
     });
+    const tog = $("nav-toggle");
+    const menu = $("nav-links");
+    if (tog && menu) tog.addEventListener("click", function () { menu.classList.toggle("hidden"); });
     paintQuote();
     paintWallet();
     solUsd();
-    mobileHint();
+    if (isMobile() && !getProvider()) {
+      setStatus("On a phone, open this page inside Phantom (Explore) or tap Open in Phantom.");
+    }
     connect({ onlyIfTrusted: true }).catch(function () {});
   }
 
