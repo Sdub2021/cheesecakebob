@@ -1,6 +1,6 @@
 /* Buyer pays from THEIR wallet. Site never holds keys. */
 (function () {
-  const MERCHANT = "68wcbLLBULTWKBriRq5BmgYw6fQREV54e59hRqrWWtj8";
+  const MERCHANT = "E2HfyLor6AAsexeTU6pUC9XHmwu616GmYXzrbAiH2csm";
   const RPC = "https://api.mainnet-beta.solana.com";
   const QUOTE_MS = 90000;
   const SITE = (location.origin + location.pathname).replace(/index\.html$/, "");
